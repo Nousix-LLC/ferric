@@ -1,0 +1,36 @@
+# Ferric — a small Rust/WebAssembly web-application framework.
+#
+# Workspace: `ferric` (core: signals, components, keyed virtual DOM, events), `ferric-router`
+# (client-side routing on the History API) and `ferric-http` (fetch-based HTTP/JSON client).
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.82"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Nousix-LLC/ferric"
+
+# Shared dependency versions — members reference these with `.workspace = true`.
+[workspace.dependencies]
+wasm-bindgen = "0.2"
+js-sys = "0.3"
+web-sys = "0.3"
+wasm-bindgen-test = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[workspace.lints.rust]
+missing_docs = "warn"
+unsafe_code = "warn"
+
+[workspace.lints.clippy]
+all = "warn"
+
+# Size-tuned release profile — wasm payloads benefit from small code.
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
