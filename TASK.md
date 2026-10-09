@@ -77,16 +77,30 @@ The reasoning behind that, which every design decision should serve:
 4. **Small core, extensions outside it.** The core stays small; routing, HTTP, forms, SSR integrations and the like are
    separate crates. Measure and publish compile time, bundle size and dependency count, and keep them honest.
 
-5. **Built for N-SWE, measured in tokens.**
+5. **Built for N-SWE, and cheaper because it is right the first time.**
    - Every API must be expressible as methodology guidance ("do this, check that") and checkable in review. If a
      feature can't be described that way, it is the wrong API for Ferric.
    - Each feature should make a step of N-SWE's brief → build → verify → review loop more reliable: typed UI states map
      to acceptance criteria, deterministic server-rendered output to snapshot checks, errors that teach the fix to DAGs
      repairing their own failures.
-   - **Cost to build is a design goal, and measuring it honestly is part of the work.** Raw token counts mislead (they
-     are dominated by cached context); the real saving is work that never has to happen because it was right the first
-     time. Define and publish a fair metric for it (candidates: first-pass correctness, the share of effort spent on
-     rework and retries, iterations to a verified green build, review findings per change) before claiming a number.
+   - **How Ferric saves tokens: work that never has to happen.** An agent's most expensive tokens go to work that gets
+     thrown away: retries, debugging loops, remediation rounds, rewrites. Ferric is designed so a correct first pass is
+     the likely one:
+     - every UI state is typed, so a forgotten loading or error state is a compile error, not a runtime bug hunt;
+     - errors teach the fix, so an agent repairs in one step instead of guessing;
+     - one obvious way to do each thing, so no tokens go to exploring alternatives;
+     - documentation that is literally true, and a methodology that loads only what a task needs, so an agent doesn't
+       search or guess;
+     - deterministic server-rendered output and a browserless test harness, so verifying is cheap and failures surface
+       early.
+   - **Expect total spend to stay flat or rise (Jevons paradox).** When each unit of work gets cheaper, teams do more
+     of it: more features, more reviews, projects they would have skipped. A team building with Ferric may well see its
+     token bill go up. That doesn't mean Ferric made the work less efficient; it means they did more work.
+   - **Never a number.** The saving is an opportunity cost: the run that would have happened without Ferric never
+     happens, so it cannot be measured, and the volume of work changes anyway. Never claim a savings figure (not a
+     percentage of tokens, not dollars). Judge every design decision by whether it makes a correct first pass more
+     likely, and report what the work achieved (first-try success, review findings, bugs found by tests), never what
+     it saved.
 
 ### Ferric's own methodology
 
@@ -140,9 +154,9 @@ Types are what TypeScript teams have invested most in, so the path starts there.
 - Releases with semver and a changelog, ready to publish.
 - **Ferric's own methodology bundle** (above), plus its `llms.txt` and agent-skill exports.
 - **A published, honest agent benchmark**: a fixed set of realistic UI tasks, built by N-SWE with Ferric and its
-  methodology, and by N-SWE and other coding agents in React/TypeScript, measuring the cost-to-build metric defined above
-  (not raw tokens), first-try success, compile/type errors, review findings, and runtime bugs found by tests. Publish
-  the method and the results whichever way they come out.
+  methodology, and by N-SWE and other coding agents in React/TypeScript, reporting what the work achieved: first-try
+  success, compile/type errors, review findings, and runtime bugs found by tests. It reports outcomes, not a cost
+  saving (see principle 5). Publish the method and the results whichever way they come out.
 - Honest performance numbers (compile time, bundle size, dependency count; a js-framework-benchmark entry).
 
 ### How to run the project
@@ -176,7 +190,7 @@ design: accept, adapt or decline a request on its merits and against the princip
 - The 1.0 scope is delivered, documented and released, with CI green on `main`.
 - A TypeScript developer can follow the tutorial, generate Ferric types from their own TypeScript, and mount a Ferric
   component in their existing Vite app.
-- The agent benchmark is published, including the cost-to-build comparison against React/TypeScript.
+- The agent benchmark is published.
 - Nousix-Base's dashboard runs on Ferric, and its upstream issues are resolved or answered.
 - The repository's GitHub Project, issues, pull requests and reviews tell the full story of how Ferric reached 1.0.
 

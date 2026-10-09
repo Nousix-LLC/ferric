@@ -30,12 +30,14 @@ time, inside the Vite app you already have.
 - **Full stack with Axum.** Server-side rendering and hydration, with the same types shared by your Axum backend and
   your Ferric frontend.
 
-- **Cheaper to build with.** Not fewer tokens per line: less work that has to be redone. Typed UI states, errors that
-  teach the fix and one obvious way to do things aim to get an AI team to a working app right the first time. We will
-  define a fair way to measure that before claiming a number.
+- **Cheaper to build with, by being right the first time.** An AI agent's most expensive tokens go to work that gets
+  thrown away: retries, debugging loops, rewrites. Typed UI states, errors that teach the fix, one obvious way to do
+  things and documentation that is literally true are there so the first pass is the correct one. We never put a
+  number on that saving: it's an opportunity cost, and cheaper work tends to mean more work gets done (Jevons
+  paradox), so your token bill may well go up as you build more. We publish what the work achieves instead.
 
 We will publish an honest benchmark of AI coding agents building the same apps in Ferric and in React/TypeScript
-(cost to a working app, first-try success, type errors, runtime bugs), whichever way it comes out.
+(first-try success, type errors, review findings, runtime bugs), whichever way it comes out.
 
 ## What's here today
 
