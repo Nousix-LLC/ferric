@@ -2,7 +2,10 @@
 
 **Correctness-first UI, written by AI, reachable from your TypeScript.**
 
-Ferric is a small Rust/WebAssembly web framework for **TypeScript developers who build with AI coding agents**. Your
+Ferric is a small Rust/WebAssembly web framework for **TypeScript developers who build with AI coding agents**. It
+flips the usual relationship: instead of teaching AI a framework built for human authors, Ferric is designed around how
+an AI engineering team actually works (methodologies, contracts, verification, review), and it ships with its own
+methodology for building and reviewing Ferric apps. Your
 types become Ferric's types; your agent writes components the compiler proves; and you adopt it one component at a
 time, inside the Vite app you already have.
 
@@ -27,8 +30,12 @@ time, inside the Vite app you already have.
 - **Full stack with Axum.** Server-side rendering and hydration, with the same types shared by your Axum backend and
   your Ferric frontend.
 
+- **Cheaper to build with.** We measure the tokens it takes an AI team to reach a working, verified app, including
+  retries and fixes. The target is 30–40% fewer than the same app in React/TypeScript, coming from design: fewer
+  retries, less boilerplate, less reading, and bugs caught at compile time instead of in debugging loops.
+
 We will publish an honest benchmark of AI coding agents building the same apps in Ferric and in React/TypeScript
-(first-try success, type errors, runtime bugs), whichever way it comes out.
+(tokens to a working app, first-try success, type errors, runtime bugs), whichever way it comes out.
 
 ## What's here today
 

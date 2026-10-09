@@ -33,6 +33,11 @@ frontend. Its identity:
 > Your types become Ferric's types; your agent writes components the compiler proves; adopt it one component at a time,
 > inside the Vite app you already have.
 
+Ferric flips the usual relationship between a framework and the AI that writes code with it. Instead of teaching AI an
+existing framework built for human authors, Ferric is **designed around how a methodology-driven AI engineering team
+(N-SWE) works**: briefs, contracts, methodologies, verification and independent review. Human TypeScript developers
+benefit for the same reasons (explicit, typed, verifiable, small), but N-SWE's workflow sets the design.
+
 The reasoning behind that, which every design decision should serve:
 
 - TypeScript won because it made correctness affordable and adoptable: a superset you could move to one file at a time.
@@ -71,6 +76,25 @@ The reasoning behind that, which every design decision should serve:
 3. **Reachable from TypeScript.** Adoption is incremental and mechanical (see "The TypeScript path").
 4. **Small core, extensions outside it.** The core stays small; routing, HTTP, forms, SSR integrations and the like are
    separate crates. Measure and publish compile time, bundle size and dependency count, and keep them honest.
+
+5. **Built for N-SWE, measured in tokens.**
+   - Every API must be expressible as methodology guidance ("do this, check that") and checkable in review. If a
+     feature can't be described that way, it is the wrong API for Ferric.
+   - Each feature should make a step of N-SWE's brief → build → verify → review loop more reliable: typed UI states map
+     to acceptance criteria, deterministic server-rendered output to snapshot checks, errors that teach the fix to DAGs
+     repairing their own failures.
+   - **Cost to build is a design metric:** the tokens it takes an AI team to reach a working, verified app, including
+     retries and fixes (not tokens per line). Savings must come from design: fewer retries, less boilerplate and
+     configuration, less reading, and bugs caught at compile time instead of in runtime debugging loops. The target is
+     30–40% fewer tokens than the same app in React/TypeScript, measured, not claimed.
+
+### Ferric's own methodology
+
+Ferric ships with its own methodology bundle, versioned with the framework: how to build a Ferric app (structure, state,
+data, forms, routing, SSR, the TypeScript path) and how to review one. Every release updates the guidance alongside the
+code. The `llms.txt` and the agent skill are exports of this bundle for other agents. Nousix-Base's dashboard team uses
+it, and its friction points come back upstream as issues, so the framework and its methodology improve together from
+real AI usage.
 
 ### The TypeScript path
 
@@ -114,9 +138,11 @@ Types are what TypeScript teams have invested most in, so the path starts there.
 - Docs: a guide, a tutorial for TypeScript developers, API docs, examples, a starter template, `llms.txt`, the agent
   skill.
 - Releases with semver and a changelog, ready to publish.
-- **A published, honest agent benchmark**: a fixed set of realistic UI tasks, given to coding agents in Ferric and in
-  React/TypeScript, measuring first-try success, compile/type errors, and runtime bugs found by tests. Publish the
-  method and the results whichever way they come out.
+- **Ferric's own methodology bundle** (above), plus its `llms.txt` and agent-skill exports.
+- **A published, honest agent benchmark**: a fixed set of realistic UI tasks, built by N-SWE with Ferric and its
+  methodology, and by N-SWE and other coding agents in React/TypeScript, measuring **tokens to a working, verified app**
+  (including retries), first-try success, compile/type errors, review findings, and runtime bugs found by tests. Publish
+  the method and the results whichever way they come out.
 - Honest performance numbers (compile time, bundle size, dependency count; a js-framework-benchmark entry).
 
 ### How to run the project
@@ -150,7 +176,7 @@ design: accept, adapt or decline a request on its merits and against the princip
 - The 1.0 scope is delivered, documented and released, with CI green on `main`.
 - A TypeScript developer can follow the tutorial, generate Ferric types from their own TypeScript, and mount a Ferric
   component in their existing Vite app.
-- The agent benchmark is published.
+- The agent benchmark is published, including the token-cost comparison against React/TypeScript.
 - Nousix-Base's dashboard runs on Ferric, and its upstream issues are resolved or answered.
 - The repository's GitHub Project, issues, pull requests and reviews tell the full story of how Ferric reached 1.0.
 
