@@ -30,12 +30,12 @@ time, inside the Vite app you already have.
 - **Full stack with Axum.** Server-side rendering and hydration, with the same types shared by your Axum backend and
   your Ferric frontend.
 
-- **Cheaper to build with.** We measure the tokens it takes an AI team to reach a working, verified app, including
-  retries and fixes. The target is 30–40% fewer than the same app in React/TypeScript, coming from design: fewer
-  retries, less boilerplate, less reading, and bugs caught at compile time instead of in debugging loops.
+- **Cheaper to build with.** Not fewer tokens per line: less work that has to be redone. Typed UI states, errors that
+  teach the fix and one obvious way to do things aim to get an AI team to a working app right the first time. We will
+  define a fair way to measure that before claiming a number.
 
 We will publish an honest benchmark of AI coding agents building the same apps in Ferric and in React/TypeScript
-(tokens to a working app, first-try success, type errors, runtime bugs), whichever way it comes out.
+(cost to a working app, first-try success, type errors, runtime bugs), whichever way it comes out.
 
 ## What's here today
 

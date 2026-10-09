@@ -83,10 +83,10 @@ The reasoning behind that, which every design decision should serve:
    - Each feature should make a step of N-SWE's brief → build → verify → review loop more reliable: typed UI states map
      to acceptance criteria, deterministic server-rendered output to snapshot checks, errors that teach the fix to DAGs
      repairing their own failures.
-   - **Cost to build is a design metric:** the tokens it takes an AI team to reach a working, verified app, including
-     retries and fixes (not tokens per line). Savings must come from design: fewer retries, less boilerplate and
-     configuration, less reading, and bugs caught at compile time instead of in runtime debugging loops. The target is
-     30–40% fewer tokens than the same app in React/TypeScript, measured, not claimed.
+   - **Cost to build is a design goal, and measuring it honestly is part of the work.** Raw token counts mislead (they
+     are dominated by cached context); the real saving is work that never has to happen because it was right the first
+     time. Define and publish a fair metric for it (candidates: first-pass correctness, the share of effort spent on
+     rework and retries, iterations to a verified green build, review findings per change) before claiming a number.
 
 ### Ferric's own methodology
 
@@ -140,8 +140,8 @@ Types are what TypeScript teams have invested most in, so the path starts there.
 - Releases with semver and a changelog, ready to publish.
 - **Ferric's own methodology bundle** (above), plus its `llms.txt` and agent-skill exports.
 - **A published, honest agent benchmark**: a fixed set of realistic UI tasks, built by N-SWE with Ferric and its
-  methodology, and by N-SWE and other coding agents in React/TypeScript, measuring **tokens to a working, verified app**
-  (including retries), first-try success, compile/type errors, review findings, and runtime bugs found by tests. Publish
+  methodology, and by N-SWE and other coding agents in React/TypeScript, measuring the cost-to-build metric defined above
+  (not raw tokens), first-try success, compile/type errors, review findings, and runtime bugs found by tests. Publish
   the method and the results whichever way they come out.
 - Honest performance numbers (compile time, bundle size, dependency count; a js-framework-benchmark entry).
 
@@ -176,7 +176,7 @@ design: accept, adapt or decline a request on its merits and against the princip
 - The 1.0 scope is delivered, documented and released, with CI green on `main`.
 - A TypeScript developer can follow the tutorial, generate Ferric types from their own TypeScript, and mount a Ferric
   component in their existing Vite app.
-- The agent benchmark is published, including the token-cost comparison against React/TypeScript.
+- The agent benchmark is published, including the cost-to-build comparison against React/TypeScript.
 - Nousix-Base's dashboard runs on Ferric, and its upstream issues are resolved or answered.
 - The repository's GitHub Project, issues, pull requests and reviews tell the full story of how Ferric reached 1.0.
 
