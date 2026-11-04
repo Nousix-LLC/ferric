@@ -17,8 +17,10 @@
 //! // A full counter lives in `crates/ferric/examples/counter.rs`.
 //! ```
 
+pub mod async_resource;
 pub mod component;
 pub mod dom;
+pub mod form;
 pub mod signal;
 pub mod vdom;
 
@@ -33,4 +35,6 @@ pub mod prelude {
     pub use crate::dom::mount;
     pub use crate::signal::{batch, create_effect, create_memo, create_signal, Memo, Signal};
     pub use crate::vdom::{EventKind, VElement, VNode};
+    pub use crate::async_resource::{Resource, ResourceState, suspense};
+    pub use crate::form::{Bind, FormField};
 }
