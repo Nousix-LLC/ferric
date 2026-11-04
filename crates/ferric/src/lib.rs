@@ -17,8 +17,10 @@
 //! // A full counter lives in `crates/ferric/examples/counter.rs`.
 //! ```
 
+pub mod async_resource;
 pub mod component;
 pub mod dom;
+pub mod form;
 pub mod signal;
 pub mod vdom;
 

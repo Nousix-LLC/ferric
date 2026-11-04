@@ -12,6 +12,7 @@ workspace = true
 
 [dependencies]
 wasm-bindgen.workspace = true
+wasm-bindgen-futures = "0.4"
 js-sys.workspace = true
 # The DOM runtime (src/dom.rs) renders into and patches real DOM and binds click + input events.
 # These features cover element/text/comment node creation and mutation, attributes, and the two

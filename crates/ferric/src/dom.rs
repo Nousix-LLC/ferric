@@ -222,7 +222,7 @@ fn set_events(element: &web_sys::Element, events: &[(EventKind, EventHandler)]) 
 
     // Detach anything we stashed previously.
     for kind in [EventKind::Click, EventKind::Input] {
-        let key = JsValue::from_str(stash_key(kind));
+        let key = JsValue::from_str(stash_key(kind.clone()));
         if let Ok(existing) = js_sys::Reflect::get(target, &key) {
             if existing.is_function() {
                 let func = existing.unchecked_ref::<js_sys::Function>();
@@ -243,13 +243,13 @@ fn set_events(element: &web_sys::Element, events: &[(EventKind, EventHandler)]) 
         }) as Box<dyn FnMut(web_sys::Event)>);
         let func = closure.as_ref().unchecked_ref::<js_sys::Function>();
         element
-            .add_event_listener_with_callback(event_name(*kind), func)
+            .add_event_listener_with_callback(event_name(kind.clone()), func)
             .expect("set_events: add_event_listener failed");
         // Keep the closure alive for the element's lifetime and make it retrievable for later
         // detachment.
         let _ = js_sys::Reflect::set(
             target,
-            &JsValue::from_str(stash_key(*kind)),
+            &JsValue::from_str(stash_key(kind.clone())),
             closure.as_ref(),
         );
         closure.forget();
@@ -257,18 +257,26 @@ fn set_events(element: &web_sys::Element, events: &[(EventKind, EventHandler)]) 
 }
 
 /// The DOM event name bound for an [`EventKind`].
+///
+/// Click and Input are fully implemented; all other variants are stubs for SUBTASK_dom_events.
 fn event_name(kind: EventKind) -> &'static str {
     match kind {
         EventKind::Click => "click",
         EventKind::Input => "input",
+        // SUBTASK_dom_events: implement the full mapping from contracts/event_kind_contract.md
+        _ => todo!("SUBTASK_dom_events: extend event_name for the full EventKind set"),
     }
 }
 
 /// The element-object property under which a bound listener's closure is stashed, per [`EventKind`].
+///
+/// Click and Input are fully implemented; all other variants are stubs for SUBTASK_dom_events.
 fn stash_key(kind: EventKind) -> &'static str {
     match kind {
         EventKind::Click => "__ferric_on_click",
         EventKind::Input => "__ferric_on_input",
+        // SUBTASK_dom_events: implement the full stash-key mapping for all EventKind variants
+        _ => todo!("SUBTASK_dom_events: extend stash_key for the full EventKind set"),
     }
 }
 
